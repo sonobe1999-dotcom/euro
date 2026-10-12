@@ -46,6 +46,16 @@
     // 数字を打つたびに calc を呼ぶ
     rateBox.addEventListener("input", calc);
     euroBox.addEventListener("input", calc);
+        // 起動時に、ネットから最新のレートを取りにいく
+    fetch("https://api.frankfurter.dev/v1/latest?base=EUR&symbols=JPY")
+      .then(res => res.json())
+      .then(data => {
+        rateBox.value = data.rates.JPY;  // 取れたらレート欄に入れる
+        calc();
+      })
+      .catch(() => {
+        // 取れなかったら（圏外など）165のまま。手入力で使える
+      });
   </script>
 
 </body>
