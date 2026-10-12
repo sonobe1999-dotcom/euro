@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- ① ページの基本設定。スマホで見たときに文字が小さくならないようにする行 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ユーロ円換算</title>
+
+  <!-- ② 見た目（CSS）。ここを変えても計算には影響しない -->
+  <style>
+    body { font-family: sans-serif; max-width: 420px; margin: 40px auto; padding: 0 16px; }
+    h1 { font-size: 22px; }
+    label { display: block; margin-top: 16px; font-size: 14px; color: #555; }
+    input { width: 100%; font-size: 28px; padding: 8px; box-sizing: border-box; }
+    #result { margin-top: 24px; font-size: 36px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <!-- ③ 画面に出す部品（HTML） -->
+  <h1>€ → ¥ 換算</h1>
+
+  <label>レート（1ユーロ＝何円）</label>
+  <input id="rate" type="number" value="165" inputmode="decimal">
+
+  <label>ユーロの金額</label>
+  <input id="euro" type="number" placeholder="例：12.5" inputmode="decimal">
+
+  <div id="result">¥ 0</div>
+
+  <!-- ④ 動き（JavaScript）。ここがプログラム本体 -->
+  <script>
+    // 画面の部品をつかまえておく
+    const rateBox   = document.getElementById("rate");
+    const euroBox   = document.getElementById("euro");
+    const resultBox = document.getElementById("result");
+
+    // 計算して表示する関数
+    function calc() {
+      const rate = Number(rateBox.value);
+      const euro = Number(euroBox.value);
+      const yen  = Math.round(euro * rate);          // 円は四捨五入
+      resultBox.textContent = "¥ " + yen.toLocaleString(); // 3桁カンマ区切り
+    }
+
+    // 数字を打つたびに calc を呼ぶ
+    rateBox.addEventListener("input", calc);
+    euroBox.addEventListener("input", calc);
+  </script>
+
+</body>
+</html>
